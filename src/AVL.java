@@ -33,12 +33,10 @@ public class AVL<T extends Comparable<? super T>> {
     public void updateHeightAndBF(AVLNode<T> currentNode) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
         // Get Child Data
-        int leftBF = currentNode.getLeft() == null ? -1 : currentNode.getLeft().getBalanceFactor();
-        int rightBF = currentNode.getRight() == null ? -1 : currentNode.getRight().getBalanceFactor();
-        int leftHeight = currentNode.getLeft() == null ? 0 : currentNode.getLeft().getHeight();
-        int rightHeight = currentNode.getRight() == null ? 0 : currentNode.getRight().getHeight();
+        int leftHeight = currentNode.getLeft() == null ? -1 : currentNode.getLeft().getHeight();
+        int rightHeight = currentNode.getRight() == null ? -1 : currentNode.getRight().getHeight();
         // Update parent data
-        currentNode.setBalanceFactor(leftBF-rightBF);
+        currentNode.setBalanceFactor(leftHeight - rightHeight);
         currentNode.setHeight(Math.max(leftHeight,rightHeight)+1);
     }
 
