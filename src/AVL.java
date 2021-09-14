@@ -63,7 +63,14 @@ public class AVL<T extends Comparable<? super T>> {
      */
     public AVLNode<T> rotateLeft(AVLNode<T> currentNode) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        return null;
+        // Perform Rotation
+        AVLNode<T> newRoot = currentNode.getRight();
+        currentNode.setRight(newRoot.getLeft());
+        newRoot.setLeft(currentNode);
+        // Update Height/BF
+        updateHeightAndBF(currentNode);
+        updateHeightAndBF(newRoot);
+        return newRoot;
     }
 
     /**
@@ -89,7 +96,14 @@ public class AVL<T extends Comparable<? super T>> {
      */
     public AVLNode<T> rotateRight(AVLNode<T> currentNode) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
-        return null;
+        // Perform Rotation
+        AVLNode<T> newRoot = currentNode.getLeft();
+        currentNode.setLeft(newRoot.getRight());
+        newRoot.setRight(currentNode);
+        // Update Height/BF
+        updateHeightAndBF(currentNode);
+        updateHeightAndBF(newRoot);
+        return newRoot;
     }
 
     /**
@@ -114,26 +128,30 @@ public class AVL<T extends Comparable<? super T>> {
      */
 
 
-    /*public AVLNode<T> balance(AVLNode<T> currentNode) {
+    public AVLNode<T> balance(AVLNode<T> currentNode) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
 
-        *//* First, we update the height and balance factor of the current node. *//*
+         //First, we update the height and balance factor of the current node.
         updateHeightAndBF(currentNode);
-
-        if ( *//* Condition for a right heavy tree. *//* ) {
-            if ( *//* Condition for a right-left rotation. *//* ) {
+        // Condition for a right heavy tree.
+        if (currentNode.getBalanceFactor() == -2) {
+            // Condition for a right-left rotation.
+            if (currentNode.getRight().getBalanceFactor() == 1) {
                 currentNode.setRight(rotateRight(currentNode.getRight()));
             }
             currentNode = rotateLeft(currentNode);
-        } else if ( *//* Condition for a left heavy tree. *//* ) {
-            if ( *//* Condition for a left-right rotation. *//* ) {
+            // Condition for a left heavy tree.
+        } else if (currentNode.getBalanceFactor() == 2) {
+            // Condition for a left-right rotation.
+            if (currentNode.getLeft().getBalanceFactor() == -1) {
                 currentNode.setLeft(rotateLeft(currentNode.getLeft()));
             }
             currentNode = rotateRight(currentNode);
         }
 
         return currentNode;
-    }*/
+    }
+
     public void add(T data){
         root = innerAdd(data, root);
     }
