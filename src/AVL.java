@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 /**
  * Your implementation of the AVL tree rotations.
  */
@@ -6,6 +8,7 @@ public class AVL<T extends Comparable<? super T>> {
     /**
      * DO NOT ADD ANY GLOBAL VARIABLES!
      */
+    public AVLNode<T> root;
 
     /**
      * Updates the height and balance factor of a node using its
@@ -29,6 +32,14 @@ public class AVL<T extends Comparable<? super T>> {
      */
     public void updateHeightAndBF(AVLNode<T> currentNode) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        // Get Child Data
+        int leftBF = currentNode.getLeft() == null ? -1 : currentNode.getLeft().getBalanceFactor();
+        int rightBF = currentNode.getRight() == null ? -1 : currentNode.getRight().getBalanceFactor();
+        int leftHeight = currentNode.getLeft() == null ? 0 : currentNode.getLeft().getHeight();
+        int rightHeight = currentNode.getRight() == null ? 0 : currentNode.getRight().getHeight();
+        // Update parent data
+        currentNode.setBalanceFactor(leftBF-rightBF);
+        currentNode.setHeight(Math.max(leftHeight,rightHeight)+1);
     }
 
     /**
@@ -54,6 +65,7 @@ public class AVL<T extends Comparable<? super T>> {
      */
     public AVLNode<T> rotateLeft(AVLNode<T> currentNode) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        return null;
     }
 
     /**
@@ -79,6 +91,7 @@ public class AVL<T extends Comparable<? super T>> {
      */
     public AVLNode<T> rotateRight(AVLNode<T> currentNode) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        return null;
     }
 
     /**
@@ -101,24 +114,52 @@ public class AVL<T extends Comparable<? super T>> {
      * @param cur The current node under inspection.
      * @return The AVLNode that the caller should return.
      */
-    public AVLNode<T> balance(AVLNode<T> currentNode) {
+
+
+    /*public AVLNode<T> balance(AVLNode<T> currentNode) {
         // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
 
-        /* First, we update the height and balance factor of the current node. */
+        *//* First, we update the height and balance factor of the current node. *//*
         updateHeightAndBF(currentNode);
 
-        if ( /* Condition for a right heavy tree. */ ) {
-            if ( /* Condition for a right-left rotation. */ ) {
+        if ( *//* Condition for a right heavy tree. *//* ) {
+            if ( *//* Condition for a right-left rotation. *//* ) {
                 currentNode.setRight(rotateRight(currentNode.getRight()));
             }
             currentNode = rotateLeft(currentNode);
-        } else if ( /* Condition for a left heavy tree. */ ) {
-            if ( /* Condition for a left-right rotation. */ ) {
+        } else if ( *//* Condition for a left heavy tree. *//* ) {
+            if ( *//* Condition for a left-right rotation. *//* ) {
                 currentNode.setLeft(rotateLeft(currentNode.getLeft()));
             }
             currentNode = rotateRight(currentNode);
         }
 
         return currentNode;
+    }*/
+    public void add(T data){
+        root = innerAdd(data, root);
+    }
+    public AVLNode<T> innerAdd(T data, AVLNode<T> currNode){
+        // Base Case - Add data and return
+        if (currNode == null){
+            AVLNode<T> newNode = new AVLNode<>(data);
+            updateHeightAndBF(newNode);
+            return newNode;
+        }
+        // Recursive Part
+        int compVal = currNode.getData().compareTo(data);
+        if (compVal == 0){
+            return currNode;
+        }
+        else if (compVal > 0){
+            currNode.setLeft(innerAdd(data,currNode.getLeft()));
+            updateHeightAndBF(currNode);
+            return currNode;
+        }
+        else {
+            currNode.setRight(innerAdd(data,currNode.getRight()));
+            updateHeightAndBF(currNode);
+            return currNode;
+        }
     }
 }
